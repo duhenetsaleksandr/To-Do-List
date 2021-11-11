@@ -1,0 +1,75 @@
+.basic-btn {
+    width: 175px;
+    height: 50px;
+    background-color: #161F37;
+    border-radius: 10px;
+    padding: 10px 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: #FAFAFA;
+    line-height: 1;
+    white-space: nowrap;
+
+    transition: all 0.2s linear;
+}
+
+.basic-btn:hover {
+    box-shadow: 0 0 10px 0 #303651;
+    background-color: #81A1FD;
+    color: #020819;
+}
+
+.basic-input {
+    width: 500px;
+    height: 50px;
+    background-color: #303651;
+    border-radius: 10px;
+    padding: 10px 25px;
+
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: #FAFAFA;
+    line-height: 1;
+
+    transition: all 0.2s ease;
+}
+
+.basic-input::placeholder {
+    transition: all 0.2s ease;
+}
+
+.basic-input:focus {
+    box-shadow: 0 0 10px 0 #020819;
+}
+
+.basic-input:focus::placeholder {
+    opacity: 0;
+}
+
+/* ========================================= */
+
+.add-task {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-task__input {
+    margin-right: 25px;
+    padding-right: 50px;
+}
+
+.add-task__btn svg {
+    margin-right: 10px;
+
+    transition: all 0.2s ease;
+}
+
+.add-task__btn:hover svg {
+    fill: #020819;
+}
