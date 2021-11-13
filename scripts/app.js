@@ -9,6 +9,10 @@ editTaskBtn.addEventListener('click', editTask);
 addTaskValue.addEventListener('keydown', submit);
 listTask.addEventListener('click', listHandlerClick);
 
+function saveToLocaleStorage() {
+   localStorage.setItem('listTasks', listTask.innerHTML);
+}
+
 function editTask(event) {
    event.preventDefault();
    addTaskBtn.classList.toggle('hide-btn');
@@ -17,6 +21,7 @@ function editTask(event) {
    currentEditTask.querySelector('.list-task__item__check').innerText = addTaskValue.value;
    currentEditTask = null;
    addTaskValue.value = '';
+   saveToLocaleStorage();
 }
 
 function listHandlerClick(event) {
@@ -32,6 +37,7 @@ function listHandlerClick(event) {
 
    element = element.classList.contains('list-task__item') ? element : element.parentNode;
    element.classList.toggle('checked');
+   saveToLocaleStorage();
 }
 
 function showEditBtn(element) {
@@ -48,6 +54,7 @@ function showEditBtn(element) {
 
 function deleteTask(element) {
    element.remove();
+   saveToLocaleStorage();
 }
 
 function submit(event) {
@@ -73,6 +80,9 @@ function addNewTask(event) {
    const newElementTask = createTaskElement(text);
 
    listTask.append(newElementTask);
+
+
+   saveToLocaleStorage();
 }
 
 function createTaskElement(taskText) {
@@ -88,4 +98,5 @@ function createTaskElement(taskText) {
 
 window.onload = function () {
    addTaskValue.focus();
+   listTask.innerHTML = localStorage.getItem('listTasks');
 }
