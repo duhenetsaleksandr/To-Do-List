@@ -8,7 +8,9 @@ function addNewTask(event) {
    addTaskValue.focus();
 
    if (text.length === 0) return false;
-   listTask.append(createTaskElement(text));
+   listTask.append(createTaskElement(text, globalId));
+   tasks.push(new Task(globalId, text, false));
+   globalId++;
    saveToLocaleStorage();
    return true;
 }
@@ -28,6 +30,7 @@ function editTask(event) {
    currentEditTask.querySelector('.list-task__item__check').innerText = addTaskValue.value;
    currentEditTask = null;
    addTaskValue.value = '';
+
    saveToLocaleStorage();
    return true;
 }
@@ -56,5 +59,11 @@ function listHandlerClick(event) {
 
    element = element.classList.contains('list-task__item') ? element : element.parentNode;
    element.classList.toggle('checked');
+
+   const elemId = element.getAttribute('data-id');
+   const index = tasks.findIndex((item) => item.id === +elemId);
+
+   tasks[index].completed = !tasks[index].completed;
+
    saveToLocaleStorage();
 }
