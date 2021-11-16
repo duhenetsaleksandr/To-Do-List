@@ -63,6 +63,7 @@ function listHandlerClick(event) {
    }
 
    element = element.classList.contains('list-task__item') ? element : element.parentNode;
+   if (!element.classList.contains('list-task__item')) return;
    element.classList.toggle('checked');
 
    const elemId = Number(element.getAttribute('data-id'));
