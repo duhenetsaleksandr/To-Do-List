@@ -8,10 +8,12 @@ function addNewTask(event) {
    addTaskValue.focus();
 
    if (text.length === 0) return false;
-   listTask.append(createTaskElement(text, globalId));
-   tasks.push(new Task(globalId, text, false));
-   globalId++;
-   saveToLocaleStorage();
+
+   const newTask = new Task(globalId++, text, false);
+   listTask.append(createTaskElement(newTask));
+
+   saveToLocaleStorage(newTask);
+
    return true;
 }
 
@@ -28,10 +30,13 @@ function editTask(event) {
       return false;
    }
    currentEditTask.querySelector('.list-task__item__check').innerText = addTaskValue.value;
+
+   const elemId = Number(currentEditTask.getAttribute('data-id'));
+   const checked = currentEditTask.classList.contains('checked');
+   saveToLocaleStorage(new Task(elemId, addTaskValue.value, checked));
+
    currentEditTask = null;
    addTaskValue.value = '';
-
-   saveToLocaleStorage();
    return true;
 }
 
@@ -60,10 +65,8 @@ function listHandlerClick(event) {
    element = element.classList.contains('list-task__item') ? element : element.parentNode;
    element.classList.toggle('checked');
 
-   const elemId = element.getAttribute('data-id');
-   const index = tasks.findIndex((item) => item.id === +elemId);
-
-   tasks[index].completed = !tasks[index].completed;
-
-   saveToLocaleStorage();
+   const elemId = Number(element.getAttribute('data-id'));
+   const text = element.querySelector('.list-task__item__check').innerText;
+   const checked = element.classList.contains('checked');
+   saveToLocaleStorage(new Task(elemId, text, checked));
 }
