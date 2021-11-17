@@ -1,18 +1,18 @@
-function Task(id, value, completed) {
+function Task(id, title, completed) {
    this.id = id;
-   this.value = value;
+   this.value = title;
    this.completed = completed;
 }
 
-function createTaskElement({id, value, completed} = {}) {
-   if (typeof value !== 'string') return null;
-   value = value.trim();
-   if (value.length === 0) return null;
+function createTaskElement({id, title, completed} = {}) {
+   if (typeof title !== 'string') return null;
+   title = title.trim();
+   if (title.length === 0) return null;
    const task = document.createElement('div');
    task.classList.add('list-task__item');
    task.setAttribute('data-id', id);
    task.innerHTML = `
-      <div class="list-task__item__check">${value}</div>
+      <div class="list-task__item__check">${title}</div>
       <div class="list-task__item__edit"></div>
       <div class="list-task__item__delete"></div>
    `;
@@ -25,9 +25,18 @@ function deleteTask(element) {
    if (!element.classList.contains('list-task__item')) return false;
 
    const elemId = element.getAttribute('data-id');
-   localStorage.removeItem(`todo${elemId}`);
-
-   element.remove();
+   const URLTodo = `${URL}/${elemId}`;
+   document.body.classList.add('loader');
+   fetch(URLTodo, {
+      method: 'DELETE',
+      headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+      }
+   })
+      .then(response => response.json())
+      .then(data => (console.log(data), data))
+      .then(() => element.remove())
+      .finally(() => document.body.classList.remove('loader'))
 
    return true;
 }
@@ -44,24 +53,4 @@ function showEditBtn(element) {
       editTaskBtn.classList.toggle('hide-btn');
    }
    return true;
-}
-
-function saveToLocaleStorage(taskObject) {
-   localStorage.setItem(`todo${taskObject.id}`, JSON.stringify(taskObject));
-}
-
-function loadFromLocaleStorage() {
-   const localStorageKeys = [];
-   for (let i = 0; i < localStorage.length; i++) {
-      localStorageKeys.push(localStorage.key(i));
-   }
-
-   const toDoId = localStorageKeys.filter(key => key.includes('todo')).map(key => Number(key.slice(4)));
-   toDoId.sort((a, b) => a - b).forEach(id => {
-      const toDoObject = JSON.parse(localStorage.getItem(`todo${id}`));
-      listTask.append(createTaskElement(toDoObject));
-      console.log(toDoObject);
-   });
-
-   globalId = ++toDoId[toDoId.length - 1] || 1;
 }

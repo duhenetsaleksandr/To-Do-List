@@ -9,10 +9,23 @@ function addNewTask(event) {
 
    if (text.length === 0) return false;
 
-   const newTask = new Task(globalId++, text, false);
-   listTask.append(createTaskElement(newTask));
+   const task = {
+      title: text,
+      completed: false
+   };
 
-   saveToLocaleStorage(newTask);
+   document.body.classList.add('loader');
+   fetch(URL, {
+      method: 'POST',
+      body: JSON.stringify(task),
+      headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+      }
+   })
+      .then(response => response.json())
+      .then(data => (console.log(data), data))
+      .then(addTask)
+      .finally(() => document.body.classList.remove('loader'))
 
    return true;
 }
@@ -29,14 +42,38 @@ function editTask(event) {
       currentEditTask = null;
       return false;
    }
-   currentEditTask.querySelector('.list-task__item__check').innerText = addTaskValue.value;
 
    const elemId = Number(currentEditTask.getAttribute('data-id'));
-   const checked = currentEditTask.classList.contains('checked');
-   saveToLocaleStorage(new Task(elemId, addTaskValue.value, checked));
+   const URLTodo = `${URL}/${elemId}`;
+   const task = {
+      id: elemId,
+      title: addTaskValue.value,
+      completed: currentEditTask.classList.contains('checked')
+   };
+   document.body.classList.add('loader');
+   fetch(URLTodo, {
+      method: 'PUT',
+      headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(task)
+   })
+      .then(response => response.json())
+      .then(data => (console.log(data), data))
+      .then(data => {
+         if (!data.title) {
+            throw new Error('Title is not defined!');
+         }
+         currentEditTask.querySelector('.list-task__item__check').innerText = data.title
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+         currentEditTask = null;
+         document.body.classList.remove('loader')
+      })
 
-   currentEditTask = null;
    addTaskValue.value = '';
+
    return true;
 }
 
@@ -64,10 +101,26 @@ function listHandlerClick(event) {
 
    element = element.classList.contains('list-task__item') ? element : element.parentNode;
    if (!element.classList.contains('list-task__item')) return;
-   element.classList.toggle('checked');
 
    const elemId = Number(element.getAttribute('data-id'));
    const text = element.querySelector('.list-task__item__check').innerText;
-   const checked = element.classList.contains('checked');
-   saveToLocaleStorage(new Task(elemId, text, checked));
+
+   const URLTodo = `${URL}/${elemId}`;
+   const task = {
+      id: elemId,
+      title: text,
+      completed: !element.classList.contains('checked')
+   };
+   document.body.classList.add('loader');
+   fetch(URLTodo, {
+      method: 'PUT',
+      headers: {
+         'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(task)
+   })
+      .then(response => response.json())
+      .then(data => (console.log(data), data))
+      .then(() => element.classList.toggle('checked'))
+      .finally(() => document.body.classList.remove('loader'))
 }
