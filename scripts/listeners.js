@@ -122,5 +122,9 @@ function listHandlerClick(event) {
       .then(response => response.json())
       .then(data => (console.log(data), data))
       .then(() => element.classList.toggle('checked'))
+      .catch((error) => {
+         console.log(error);
+         element.classList.toggle('checked');
+      })
       .finally(() => document.body.classList.remove('loader'))
 }
