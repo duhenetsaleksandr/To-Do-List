@@ -1,3 +1,4 @@
-# To Do List App
+# ToDo List MVC
 
-by Aleksandr Duhenets
+#### Aleksandr Duhenets
+

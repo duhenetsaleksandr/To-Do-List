@@ -1,0 +1,141 @@
+.main {
+    flex: 1 1 auto;
+    padding: 50px 0;
+}
+
+.main .container {
+    display: flex;
+    align-items: center;
+}
+
+.main__container {
+    max-width: 800px;
+    width: 100%;
+
+    max-height: 610px;
+    height: 100%;
+
+    padding: 50px;
+
+    background-color: #21273E;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================================ */
+
+.list-task {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+
+    margin-right: -10px;
+    padding-right: 5px;
+}
+
+.list-task::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+.list-task::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #161F37;
+}
+
+.list-task .list-task__item:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.list-task__item {
+    width: 100%;
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #303651;
+    border-radius: 10px;
+
+    padding: 0 25px;
+}
+
+.list-task__item:hover {
+    cursor: pointer;
+}
+
+.list-task__item.checked {
+    text-decoration: line-through;
+    background-color: #02081926;
+    color: #303651;
+}
+
+.list-task__item div:not(:last-child) {
+    margin-right: 15px;
+}
+
+.list-task__item__check {
+    flex: 1 1 auto;
+    align-self: stretch;
+
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+
+    line-height: 20px;
+}
+
+.list-task__item__check:before {
+    content: url("../images/Check.svg");
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+
+.list-task__item.checked .list-task__item__check:before {
+    background-image: url("../images/Check-arrow.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.list-task__item__edit,
+.list-task__item__delete {
+    flex: 0 0 auto;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    transition: all 0.2s ease;
+}
+
+.list-task__item__edit:hover,
+.list-task__item__delete:hover {
+    cursor: pointer;
+    background-color: #161F37;
+}
+
+.list-task__item__edit {
+    width: 20px;
+    background-color: #81A1FD;
+    -webkit-mask-image: url("../images/Edit.svg");
+    mask-image: url("../images/Edit.svg");
+}
+
+.list-task__item__delete {
+    width: 17px;
+    background-color: #81A1FD;
+    -webkit-mask-image: url("../images/Delete.svg");
+    mask-image: url("../images/Delete.svg");
+}
+
+.list-task__item.checked .list-task__item__edit,
+.list-task__item.checked .list-task__item__delete {
+    background-color: #303651;
+}
+
+.list-task__item.checked .list-task__item__edit:hover,
+.list-task__item.checked .list-task__item__delete:hover {
+    background-color: #81A1FD;
+}
