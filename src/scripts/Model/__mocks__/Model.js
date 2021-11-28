@@ -15,22 +15,22 @@ export class ToDoModel {
             this.view.loaderState('run');
             this.data = [
                 {
-                    "userId": 1,
-                    "id": 1,
-                    "title": "delectus aut autem",
-                    "completed": false
+                    userId: 1,
+                    id: 1,
+                    title: 'delectus aut autem',
+                    completed: false
                 },
                 {
-                    "userId": 1,
-                    "id": 2,
-                    "title": "quis ut nam facilis et officia qui",
-                    "completed": false
+                    userId: 1,
+                    id: 2,
+                    title: 'quis ut nam facilis et officia qui',
+                    completed: false
                 },
                 {
-                    "userId": 1,
-                    "id": 3,
-                    "title": "fugiat veniam minus",
-                    "completed": false
+                    userId: 1,
+                    id: 3,
+                    title: 'fugiat veniam minus',
+                    completed: false
                 },
             ];
             this.view.renderList(this.data);
@@ -45,8 +45,8 @@ export class ToDoModel {
         try {
             this.view.loaderState('run');
             this.data.push({
-                "userId": 1,
-                "id": 201,
+                userId: 1,
+                id: 201,
                 ...todo
             });
             this.view.renderList(this.data);

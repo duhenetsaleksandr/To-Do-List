@@ -1,4 +1,4 @@
-import {html} from "../__mocks__/html/html";
+import {html} from '../__mocks__/html/html';
 
 jest.mock('../src/scripts/Model/Model');
 
@@ -33,8 +33,10 @@ describe('On HTML', function () {
     it('should delete last task in list of todos', function () {
         const lastTask = document.querySelector('.list-task__item:last-child');
         const lastTaskId = lastTask.dataset.id;
+        const amountTodos = document.querySelectorAll('.list-task .list-task__item').length;
         lastTask.querySelector('.list-task__item__delete').click();
         expect(document.querySelector('.list-task__item:last-child').dataset.id).not.toBe(lastTaskId);
+        expect(document.querySelectorAll('.list-task .list-task__item').length).toBe(amountTodos - 1);
     });
 
     it('should not to add new task if input value is empty', function () {

@@ -27,7 +27,6 @@ export class ToDoView {
         this.elements.input.value = element.querySelector('.list-task__item__check').textContent;
         this.currentEditTask = element;
         this.elements.input.focus();
-
         if (this.elements.editTaskBtn.classList.contains('hide-btn')) this.toggleBtn();
     }
 

@@ -1,5 +1,5 @@
-import {URL} from "../constants";
-import axios from "axios";
+import { URL } from '../constants';
+import axios from 'axios';
 
 export class ToDoModel {
     constructor(view) {
