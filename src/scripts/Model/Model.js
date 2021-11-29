@@ -30,7 +30,9 @@ export class ToDoModel {
         try {
             this.view.loaderState('run');
             const response = await axios.post(URL, todo);
-            this.data.push(response.data);
+            if (200 <= response.status && response.status < 300) {
+                if (response.data.id) this.data.push(response.data);
+            }
             this.view.renderList(this.data);
         } catch (error) {
             console.log(error);
@@ -43,8 +45,12 @@ export class ToDoModel {
         try {
             this.view.loaderState('run');
             let todo = this.data.find(todo => todo.id === id);
-            todo.completed = !todo.completed;
-            await axios.put(`${URL}/${id}`, todo);
+            const editTodo = {id: todo.id, title: todo.title, completed: !todo.completed};
+            const response = await axios.put(`${URL}/${id}`, editTodo);
+            if (200 <= response.status && response.status < 300) {
+                const data = response.data;
+                if (data.id) todo.completed = data.completed;
+            }
             this.view.renderList(this.data);
         } catch (error) {
             console.log(error);
@@ -56,9 +62,11 @@ export class ToDoModel {
     async deleteTask(id) {
         try {
             this.view.loaderState('run');
-            await axios.delete(`${URL}/${id}`);
-            let index = this.data.findIndex(todo => todo.id === id);
-            this.data.splice(index, 1);
+            const response = await axios.delete(`${URL}/${id}`);
+            if (200 <= response.status && response.status < 300) {
+                let index = this.data.findIndex(todo => todo.id === id);
+                this.data.splice(index, 1);
+            }
             this.view.renderList(this.data);
         } catch (error) {
             console.log(error);
@@ -71,8 +79,12 @@ export class ToDoModel {
         try {
             this.view.loaderState('run');
             let todo = this.data.find(todo => todo.id === id);
-            todo.title = title;
-            await axios.put(`${URL}/${id}`, todo);
+            const editTodo = {id: todo.id, title, completed: todo.completed};
+            const response = await axios.put(`${URL}/${id}`, editTodo);
+            if (200 <= response.status && response.status < 300) {
+                const data = response.data;
+                if (data.id) todo.title = data.title;
+            }
             this.view.renderList(this.data);
         } catch (error) {
             console.log(error);
