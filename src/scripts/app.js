@@ -1,5 +1,4 @@
 import '../styles/styles.css';
-
 import { ToDoModel } from './Model/Model';
 import { ToDoView } from './View/View';
 import { ToDoController } from './Controller/Сontroller';
