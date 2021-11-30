@@ -1,17 +1,15 @@
+import { ToDoModel } from "../Model/Model";
+import { ToDoView } from "../View/View";
+
 export class ToDoController {
     constructor() {
         this.submit = this.submit.bind(this);
         this.actionTodo = this.actionTodo.bind(this);
         this.addNewTask = this.addNewTask.bind(this);
         this.editTaskBtn = this.editTaskBtn.bind(this);
-    }
 
-    addModel(model) {
-        this.model = model;
-    }
-
-    addView(view) {
-        this.view = view;
+        this.view = new ToDoView(this);
+        this.model = new ToDoModel(this.view);
     }
 
     submit(event) {
